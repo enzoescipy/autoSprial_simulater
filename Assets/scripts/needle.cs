@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class needle : MonoBehaviour
 {
-    private bool toggle = true;
+    public bool attached = true;
     private int index;
 
     //cache
@@ -22,10 +22,12 @@ public class needle : MonoBehaviour
             Transform target = mother_transform.GetChild(i);
             if (GameObject.ReferenceEquals(target.gameObject, gameObject))
             {
-                index = i;
+                index = i - 1;
                 break;
             }
         }
+
+        OnMouseDown();
     }
 
     // Update is called once per frame
@@ -36,18 +38,23 @@ public class needle : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (toggle)
+        if (attached)
         {
             Color temp = GetComponent<SpriteRenderer>().color;
             temp.a = 0.2f;
             GetComponent<SpriteRenderer>().color = temp;
+
             mother.isNeedleActivated[index] = false;
 
-            toggle = false;
+            attached = false;
         } else
         {
+            Color temp = GetComponent<SpriteRenderer>().color;
+            temp.a = 1.0f;
+            GetComponent<SpriteRenderer>().color = temp;
+
             mother.isNeedleActivated[index] = false;
-            toggle = true;
+            attached = true;
         }
 
     }

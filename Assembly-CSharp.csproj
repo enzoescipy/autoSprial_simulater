@@ -61,6 +61,7 @@
     <Compile Include="Assets\scripts\inherited\legacy_EventSystem.cs" />
     <Compile Include="Assets\scripts\DrawManager_linedrawer.cs" />
     <Compile Include="Assets\scripts\inherited\doubleSlider.cs" />
+    <Compile Include="Assets\scripts\revolution_value.cs" />
     <Compile Include="Assets\scripts\inherited\Drawer.cs" />
     <Compile Include="Assets\scripts\centerPoint.cs" />
     <Compile Include="Assets\scripts\DrawManager.cs" />

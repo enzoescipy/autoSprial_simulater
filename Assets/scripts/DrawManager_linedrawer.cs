@@ -136,10 +136,13 @@ public class Drawmanager_linedrawer: MonoBehaviour
         for (int i = 0; i < childNeedles.Count; i++)
         {
             Transform child = childNeedles[i];
-            Vector2 newTargetPos = new Vector2(child.position.x, child.position.y);
-            targetPosList[i].Add(newTargetPos);
-            lineRendererList[i].positionCount++;
-            lineRendererList[i].SetPosition(lineRendererList[i].positionCount - 1, newTargetPos);
+            if (child.GetComponent<needle>().attached == true)
+            {
+                Vector2 newTargetPos = new Vector2(child.position.x, child.position.y);
+                targetPosList[i].Add(newTargetPos);
+                lineRendererList[i].positionCount++;
+                lineRendererList[i].SetPosition(lineRendererList[i].positionCount - 1, newTargetPos);
+            }
         }
     }
 
@@ -151,7 +154,7 @@ public class Drawmanager_linedrawer: MonoBehaviour
 
     public void start_ui()
     {
-
+        drawmanager.turn_count = 0;
         isStartSimulation = true;
     }
 }

@@ -12,6 +12,8 @@ public class DrawManager : MonoBehaviour
     public float mainRadious; // size of the whole mechanics
     public float mainRatio;
 
+    public float turn_count;
+
     private void Awake()
     {
         for (int i = 0; i < transform.childCount; i++)
@@ -35,7 +37,9 @@ public class DrawManager : MonoBehaviour
     public void mainRevolution(float revolution)
     {
         transform.Rotate(0, 0, revolution);
-        
+        turn_count = turn_count + revolution / 360;
+
+
         for (int i=0; i < childCenterPoints.Count; i++)
         {
             GameObject child = childCenterPoints[i];
