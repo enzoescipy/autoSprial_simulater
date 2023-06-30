@@ -10,8 +10,11 @@ public class centerPoint : MonoBehaviour
     private GameObject needle;
 
     public float radious;
+    public float outerOffset; // offset from outer shell. if positive value, center position will be shifted inside by this amount.
     public float ratio;
-    public float distance;
+    public float needleRadious;
+    public float needleAngleOffset = 0;
+    public bool isHighlighted = true;
     public bool[] isNeedleActivated;
 
     private void Awake()
@@ -20,8 +23,14 @@ public class centerPoint : MonoBehaviour
         AreaHighlight_transform = transform.GetChild(0);
         needle = drawManager.needle_prefab;
 
+        float distance = drawManager.mainRadious - radious - outerOffset;
         transform.Translate(distance, 0, 0); // initialize distance
-        AreaHighlight_transform.localScale = Vector3.one * (drawManager.mainRadious - distance); //initialize view of gear
+        AreaHighlight_transform.localPosition = Vector3.zero;
+        AreaHighlight_transform.localScale = Vector3.one * radious * 2; //initialize view of gear
+        if (isHighlighted == false)
+        {
+            AreaHighlight_transform.GetComponent<Renderer>().enabled = false;   
+        }
         needle_instantiate(); // instantiate the neddles
     }
 
@@ -54,7 +63,7 @@ public class centerPoint : MonoBehaviour
             GameObject newNeedle = Instantiate(needle, Vector3.zero, Quaternion.identity);
             Transform trans = newNeedle.transform;
             trans.SetParent(transform);
-            trans.localPosition = new Vector3(Mathf.Cos(i * revolute_amount) * radious, Mathf.Sin(i * revolute_amount) * radious, 0);
+            trans.localPosition = new Vector3(Mathf.Cos(i * revolute_amount + needleAngleOffset) * needleRadious, Mathf.Sin(i * revolute_amount + needleAngleOffset) * needleRadious, 0);
         }
 
     }
