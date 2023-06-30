@@ -29,8 +29,7 @@ public class DrawManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //debug
-        mainRevolution(100 * Time.deltaTime);
+
     }
 
     public void mainRevolution(float revolution)

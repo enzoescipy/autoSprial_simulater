@@ -50,7 +50,7 @@ public class centerPoint : MonoBehaviour
         transform.Rotate(0, 0, revolution);
     }
 
-    private void needle_instantiate()
+    public void needle_instantiate()
     {
         float length = isNeedleActivated.Length;
         float revolute_amount = 2*Mathf.PI/length;

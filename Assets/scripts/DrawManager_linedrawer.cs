@@ -20,26 +20,18 @@ public class Drawmanager_linedrawer: MonoBehaviour
 
     // caches
     private List<Transform> childNeedles = new List<Transform>();
+    private DrawManager drawmanager; 
 
     private void Awake()
     {
-
+        drawmanager = GetComponent<DrawManager>();
     }
 
 
     // Start is called before the first frame update
     void Start()
-    {   
-        // action of collecting childNeedls must be in the start code, not awake. (because needle prefab instantiation is in the awake section)
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            Transform child = transform.GetChild(i);
-            for (int j = 1; j < child.childCount; j++)
-            {
-                Transform needle = child.GetChild(j);
-                childNeedles.Add(needle);
-            }
-        }
+    {
+        needlesCollect();
     }
 
     // Update is called once per frame
@@ -49,6 +41,7 @@ public class Drawmanager_linedrawer: MonoBehaviour
         // if durning Simulation, keep process the simulation
         if (isStartSimulation == false && isInSimulation == true)
         {
+            drawmanager.mainRevolution(100 * Time.deltaTime);
             UpdateLine();
         }
         else if (isStartSimulation == true)
@@ -105,6 +98,39 @@ public class Drawmanager_linedrawer: MonoBehaviour
         }
     }
 
+    private void DestroyNeedles()
+    {
+        for (int i=0; i< childNeedles.Count;i++)
+        {
+            Destroy(childNeedles[i].gameObject);
+        }
+    }
+
+    private void CreateNeedles()
+    {
+        childNeedles.Clear();
+        for (int i=0; i< transform.childCount; i++)
+        {
+            Transform child = transform.GetChild(i);
+            child.GetComponent<centerPoint>().needle_instantiate();
+        }
+    }
+
+    private void needlesCollect()
+    {
+        childNeedles.Clear();
+        // action of collecting childNeedls must be in the start code, not awake. (because needle prefab instantiation is in the awake section)
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Transform child = transform.GetChild(i);
+            for (int j = 1; j < child.childCount; j++)
+            {
+                Transform needle = child.GetChild(j);
+                childNeedles.Add(needle);
+            }
+        }
+    }
+
     private void UpdateLine()
     {
         for (int i = 0; i < childNeedles.Count; i++)
@@ -115,5 +141,17 @@ public class Drawmanager_linedrawer: MonoBehaviour
             lineRendererList[i].positionCount++;
             lineRendererList[i].SetPosition(lineRendererList[i].positionCount - 1, newTargetPos);
         }
+    }
+
+    // UI section
+    public void stop_ui()
+    {
+        isInSimulation = false;
+    }
+
+    public void start_ui()
+    {
+
+        isStartSimulation = true;
     }
 }

@@ -64,6 +64,7 @@
     <Compile Include="Assets\scripts\inherited\Drawer.cs" />
     <Compile Include="Assets\scripts\centerPoint.cs" />
     <Compile Include="Assets\scripts\DrawManager.cs" />
+    <Compile Include="Assets\scripts\needle.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
